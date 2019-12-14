@@ -9,11 +9,13 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import io.jsonwebtoken.lang.Arrays;
+import io.netty.handler.codec.http.HttpMethod;
 
 @Configuration
 @EnableWebSecurity
@@ -59,4 +61,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return source;
 		
 	}
+	
+	@Bean
+	public  BCryptPasswordEncoder  bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
 }
