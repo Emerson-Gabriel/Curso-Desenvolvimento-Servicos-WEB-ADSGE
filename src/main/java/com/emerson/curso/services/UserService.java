@@ -8,6 +8,9 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +23,7 @@ import com.emerson.curso.services.exceptions.DatabaseException;
 import com.emerson.curso.services.exceptions.ResourceNotFoundException;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 	
 	
 	@Autowired
@@ -78,6 +81,18 @@ public class UserService {
 		entity.setEmail(dto.getEmail());
 		entity.setPhone(dto.getPhone());
 		
+	}
+	
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+		User user= repository.findByEmail(username);
+
+		if(user == null) {
+			throw new UsernameNotFoundException(username);
+		}
+
+		return user;
 	}
 
 }
