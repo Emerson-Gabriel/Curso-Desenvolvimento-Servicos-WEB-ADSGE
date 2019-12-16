@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,6 +73,7 @@ public class ProductService {
 		
 	
 	}
+	
 	public void delete(Long id) {
 		try {
 		repository.deleteById(id);
@@ -83,6 +85,7 @@ public class ProductService {
 			throw new DatabaseException(ex.getMessage());
 		}
 	}
+	
 	private void updateData(Product entity, ProductCategoriesDTO dto) {
 		// TODO Auto-generated method stub
 		entity.setName(dto.getName());
@@ -95,6 +98,7 @@ public class ProductService {
 		}
 		
 	}
+	
 	private void setProductCategories(Product entity, List<CategoryDTO> categories) {
 		entity.getCategories().clear();
 		
@@ -103,5 +107,22 @@ public class ProductService {
 			entity.getCategories().add(category);
 		}
 		
+	}
+	
+	@Transactional(readOnly=true)
+	public Page<ProductDTO> findByCategoryPaged(Long categoryId, PageRequest pageRequest) {
+		// TODO Auto-generated method stub
+		Category category = categoryRepository.getOne(categoryId);
+		Page<Product> products = repository.findByCategory(category,pageRequest);
+
+		return products.map(e -> new ProductDTO(e));
+	}
+	@Transactional(readOnly=true)
+	public Page<ProductDTO> findByCategoryPaged(Long categoryId, PageRequest pageRequest) {
+		// TODO Auto-generated method stub
+		Category category = categoryRepository.getOne(categoryId);
+		Page<Product> products = repository.findByCategory(category,pageRequest);
+
+		return products.map(e -> new ProductDTO(e));
 	}
 }
