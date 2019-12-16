@@ -45,6 +45,7 @@ public class UserResource {
 		
 	}
 	
+	
 	@PostMapping
 	public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserInsertDTO dto){
 		

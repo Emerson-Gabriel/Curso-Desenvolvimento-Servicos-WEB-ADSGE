@@ -29,6 +29,7 @@ import com.emerson.curso.services.ProductService;
 
 @RestController
 @RequestMapping(value="/products")
+
 public class ProductResource {
 	
 	@Autowired
