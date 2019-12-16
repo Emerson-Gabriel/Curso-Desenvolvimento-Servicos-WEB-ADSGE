@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.emerson.curso.dto.CredentialsDTO;
-import com.valdomiro.curso.dto.EmailDTO;
+import com.emerson.curso.dto.EmailDTO;
 import com.emerson.curso.dto.TokenDTO;
 import com.emerson.curso.services.AuthService;
 

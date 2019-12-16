@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.emerson.curso.dto.OrderDTO;
 import com.emerson.curso.entities.Order;
-import com.valdomiro.curso.entities.User;
+import com.emerson.curso.entities.User;
 import com.emerson.curso.repositories.OrderRepository;
 import com.emerson.curso.services.exceptions.ResourceNotFoundException;
 
