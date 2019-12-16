@@ -21,7 +21,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	@Transactional(readOnly = true)
 	@Query("SELECT obj FROM Product obj WHERE LOWER(obj.name) LIKE LOWER(CONCAT('%',:name,'%'))")
 	Page<Product> findByNameContainingIgnoreCase(@Param("name") String name, Pageable pageable);
-
+ 
 	@Transactional(readOnly = true)
 	@Query("SELECT obj FROM Product obj INNER JOIN obj.categories cats WHERE :category IN cats")
 	Page<Product>findByCategory(@Param("category") Category category,Pageable pageable);
