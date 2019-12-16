@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.emerson.curso.dto.CredentialsDTO;
 import com.emerson.curso.dto.TokenDTO;
+import com.emerson.curso.entities.Order;
 import com.emerson.curso.entities.User;
 import com.emerson.curso.repositories.UserRepository;
 import com.emerson.curso.security.JWTUtil;
@@ -59,4 +60,12 @@ public class AuthService {
 			throw new JWTAuthorizationException("Acess denied");
 		}
 	}
+	
+	public void validadeOwnOrderOrAdmin(Order order) {
+		User user= authenticated();
+		if(user == null || (!user.getId().equals(order.getId())) && !user.hasRole("ROLE_ADMIN")) {
+			throw new JWTAuthorizationException("Acess denied");
+		}
+	}
+	
 }
