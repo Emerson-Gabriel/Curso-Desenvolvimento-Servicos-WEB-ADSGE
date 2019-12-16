@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.emerson.curso.services.exceptions.DatabaseException;
+import com.emerson.curso.services.exceptions.JWTAuthenticationException;
 import com.emerson.curso.services.exceptions.ResourceNotFoundException;
 
 @ControllerAdvice
