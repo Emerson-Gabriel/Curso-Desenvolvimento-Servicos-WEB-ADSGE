@@ -10,10 +10,14 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import com.emerson.curso.security.JWTAuthorizationFilter;
+import com.emerson.curso.security.JWTUtil;
 
 import io.jsonwebtoken.lang.Arrays;
 import io.netty.handler.codec.http.HttpMethod;
@@ -25,6 +29,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private Environment env;
+	
+	
+	@Autowired
+	private JWTUtil jwtUtil;
+
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
 	private static final String[] PUBLIC_MATCHERS_GET = { "/products/**","/categories/**"  };
 	private static final String[] PUBLIC_MATCHERS_POST = { "/users/**","/auth/**" };
 	private static final String[] PUBLIC_MATCHERS = { "/h2-console/**" }; //acesso publico
@@ -42,6 +54,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers(HttpMethod.POST,PUBLIC_MATCHERS_POST).permitAll();
 		http.authorizeRequests().antMatchers(HttpMethod.GET,PUBLIC_MATCHERS_GET).permitAll();
 		http.authorizeRequests().anyRequest().authenticated();
+		http.addFilter(
+				new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService)
+				); 
 		
 	}
 

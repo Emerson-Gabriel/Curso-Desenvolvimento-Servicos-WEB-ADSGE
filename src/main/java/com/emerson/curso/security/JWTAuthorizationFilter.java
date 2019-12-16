@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 public class JWTAuthorizationFilter  extends BasicAuthenticationFilter {
 
+	
 	private JWTUtil jwtUtil;
 	private UserDetailsService userDetailsService;
 
@@ -22,6 +23,7 @@ public class JWTAuthorizationFilter  extends BasicAuthenticationFilter {
 		this.jwtUtil = jwtUtil;
 		this.userDetailsService = userDetailsService;
 	}
+	
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -35,6 +37,7 @@ public class JWTAuthorizationFilter  extends BasicAuthenticationFilter {
 		}
 		chain.doFilter(request, response);
 	}
+	
 
 	private UsernamePasswordAuthenticationToken getAuthentication(String token) {
 		if (jwtUtil.isValid(token)) {
