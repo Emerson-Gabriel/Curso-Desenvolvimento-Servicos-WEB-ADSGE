@@ -27,6 +27,7 @@ public class OrderResource {
 	public ResponseEntity<List<OrderDTO>> findAll(){
 		List<OrderDTO> list= service.findAll();
 		return ResponseEntity.ok().body(list);
+		
 	}
 	
 	@GetMapping(value ="/{id}")
@@ -49,6 +50,7 @@ public class OrderResource {
 	public ResponseEntity<List<OrderDTO>> findByClient(){
 		List<OrderDTO> list= service.findByClient();
 		return ResponseEntity.ok().body(list);
+		
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")

@@ -48,6 +48,7 @@ public class OrderService {
 		List<Order> list= repository.findByClient(client);
 		return list.stream().map(e -> new OrderDTO(e)).collect(Collectors.toList());
 	}
+	
 
 	@Transactional(readOnly=true)
 	public List<OrderItemDTO> findItems(Long id) {
