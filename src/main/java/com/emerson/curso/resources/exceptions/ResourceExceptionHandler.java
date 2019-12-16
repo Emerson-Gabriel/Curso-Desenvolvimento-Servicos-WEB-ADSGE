@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.emerson.curso.services.exceptions.DatabaseException;
 import com.emerson.curso.services.exceptions.JWTAuthenticationException;
+import com.emerson.curso.services.exceptions.JWTAuthorizationException;
 import com.emerson.curso.services.exceptions.ResourceNotFoundException;
 
 @ControllerAdvice
@@ -64,5 +65,14 @@ public class ResourceExceptionHandler {
 		
 	}
 	
+	@ExceptionHandler(JWTAuthorizationException.class)
+	public ResponseEntity<StandardError> jwtAuthorization(JWTAuthorizationException e, HttpServletRequest request){
+		String error ="Authentication error";
+		HttpStatus status= HttpStatus.FORBIDDEN;
+		StandardError err= new StandardError(Instant.now(), status.value(),error,e.getMessage(), request.getRequestURI());
+
+		return ResponseEntity.status(status).body(err);
+
+	}
 	
 }
